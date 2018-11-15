@@ -1,0 +1,22 @@
+#!/usr/bin/php
+<?php
+
+if (substr(php_sapi_name(), 0, 3) != 'cli') {
+    die("Can be run via CLI only");
+}
+
+require_once 'vendor/autoload.php';
+
+unset($argv[0]);
+
+if (isset($argv[1])) {
+    $class = 'App\\Command\\' . ucfirst(strtolower($argv[1])) . 'Command';
+    unset($argv[1]);
+
+    if (class_exists($class)) {
+        $new = new $class($argv);
+        $new->run();
+    } else {
+
+    }
+}
